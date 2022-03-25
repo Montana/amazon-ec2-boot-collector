@@ -72,9 +72,6 @@ echo "assign SNS to SQS"
 set -e
 
 for topic_arn in $(cat users-sns-sqs.csv | cut -d '|' -f 3 | sort | uniq); do
-    echo
-    echo "#################################################################"
-    echo "checking.... $topic_arn"
 
     HAS_SQS_ASSIGN_LIST=$(aws sns --region sa-east-1 list-subscriptions-by-topic --topic-arn $topic_arn | jq -r .Subscriptions[].Endpoint)
 
@@ -97,3 +94,5 @@ for topic_arn in $(cat users-sns-sqs.csv | cut -d '|' -f 3 | sort | uniq); do
     fi
 
 done
+
+# Can probably update the policies at some point. 
